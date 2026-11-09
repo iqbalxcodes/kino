@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL ?? "https://kino-62tj.onrender.com";
+const BASE = import.meta.env.VITE_API_URL ?? "https://kino-62tj.onrender.com/api";
 
 export class ApiError extends Error {
     constructor(message, details = {}) {
