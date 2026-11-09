@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { MONGODB_URI, JWT_SECRET, PORT = 4000, CLIENT_ORIGIN = "http://localhost:5173" } = process.env;
+const { MONGODB_URI, JWT_SECRET, PORT = 4000, CLIENT_ORIGIN = "https://kino-62tj.onrender.com" } = process.env;
 
 if (!MONGODB_URI || !JWT_SECRET) throw new Error("MONGODB_URI dan JWT_SECRET wajib diisi di .env");
 

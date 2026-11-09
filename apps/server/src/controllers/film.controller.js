@@ -11,14 +11,14 @@ async function findFilm(id, select) {
     return film;
 }
 
-// GET /api/films?sort=popular 
+// GET /api/films?sort=popular  (tanpa limit = semua film; ?limit=N kalau perlu)
 exports.list = async (req, res) => {
     const sort = req.query.sort === "popular" ? { ratingCount: -1, ratingOverall: -1 } : { title: 1 };
     // ponytail: tanpa paginasi, limit(0) = semua. Tambah paginasi kalau film sudah ratusan.
     res.json(await Film.find().select(LIST_FIELDS).sort(sort).limit(Number(req.query.limit) || 0));
 };
 
-// GET /api/films/:id  
+// GET /api/films/:id  (tanpa daftar rating)
 exports.detail = async (req, res) => {
     res.json(await findFilm(req.params.id, "-ratings -__v"));
 };
@@ -41,6 +41,7 @@ exports.rate = async (req, res) => {
 
     const film = await findFilm(req.params.id);
     film.applyRating(req.user, rating, comments.trim());
+    // ponytail: read-modify-write, dua user rating bersamaan bisa saling timpa. $inc/pipeline update kalau trafik naik.
     await film.save();
 
     res.status(201).json({ ratingOverall: film.ratingOverall, ratingCount: film.ratingCount, ratings: film.ratings });
