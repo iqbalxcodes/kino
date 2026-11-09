@@ -1,0 +1,14 @@
+{
+  "name": "@kino/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types/*": "./types/*.ts",
+    "./constants/*": "./constants/*.ts",
+    "./utils/*": "./utils/*.ts"
+  }
+}
