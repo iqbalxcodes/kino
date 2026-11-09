@@ -2144,26 +2144,6 @@ exports.rate = async (req, res) => {
 };
 </file>
 
-<file path="apps/server/src/config.js">
-require("dotenv").config();
-
-const { MONGODB_URI, JWT_SECRET, PORT = 4000, CLIENT_ORIGIN = "https://kino-62tj.onrender.com" } = process.env;
-
-if (!MONGODB_URI || !JWT_SECRET) throw new Error("MONGODB_URI dan JWT_SECRET wajib diisi di .env");
-
-module.exports = { mongoUri: MONGODB_URI, jwtSecret: JWT_SECRET, port: Number(PORT), clientOrigin: CLIENT_ORIGIN };
-</file>
-
-<file path="apps/server/src/index.js">
-const mongoose = require("mongoose");
-const config = require("./config");
-const app = require("./app");
-
-mongoose.connect(config.mongoUri).then(() => {
-    app.listen(config.port, () => console.log(`Kino server: https://kino-62tj.onrender.com`));
-});
-</file>
-
 <file path="apps/server/package.json">
 {
   "name": "server",
@@ -2190,8 +2170,12 @@ mongoose.connect(config.mongoUri).then(() => {
 }
 </file>
 
+<file path="README.md">
+
+</file>
+
 <file path="apps/web/src/services/api.js">
-const BASE = import.meta.env.VITE_API_URL ?? "https://kino-62tj.onrender.com";
+const BASE = import.meta.env.VITE_API_URL ?? "https://kino-62tj.onrender.com/api";
 
 export class ApiError extends Error {
     constructor(message, details = {}) {
@@ -2217,8 +2201,24 @@ export async function api(path, { method = "GET", body } = {}) {
 }
 </file>
 
-<file path="README.md">
+<file path="apps/server/src/config.js">
+require("dotenv").config();
 
+const { MONGODB_URI, JWT_SECRET, PORT = 4000, CLIENT_ORIGIN = "https://kino-62tj.onrender.com/api" } = process.env;
+
+if (!MONGODB_URI || !JWT_SECRET) throw new Error("MONGODB_URI dan JWT_SECRET wajib diisi di .env");
+
+module.exports = { mongoUri: MONGODB_URI, jwtSecret: JWT_SECRET, port: Number(PORT), clientOrigin: CLIENT_ORIGIN };
+</file>
+
+<file path="apps/server/src/index.js">
+const mongoose = require("mongoose");
+const config = require("./config");
+const app = require("./app");
+
+mongoose.connect(config.mongoUri).then(() => {
+    app.listen(config.port, () => console.log(`Kino server: https://kino-62tj.onrender.com/api`));
+});
 </file>
 
 </files>
